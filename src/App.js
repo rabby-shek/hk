@@ -12,9 +12,13 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import Pagination from 'react-bootstrap/Pagination';
+import Submenu1 from './components/Submenu1';
+import Submenu2 from './components/Submenu2';
+
 
 function App() {
   const [user, setUser] = useState([]);
+  const [active, setActive] = useState("Firstcard");
 
   const fetchData = () => {
     return fetch("https://jsonplaceholder.typicode.com/users")
@@ -33,23 +37,30 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <Nav.Link href="#home" onClick={()=> setActive("Firstcard")} >Home</Nav.Link>
+            <Nav.Link href="#link" onClick={()=> setActive("secondcard")}>Contact</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+              <NavDropdown.Item href="#action/3.2"  onClick={()=> setActive("thirdcard")}>
+                submenu 1
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3"  onClick={()=> setActive("fourthcard")}>submenu 2</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
-                Separated link
+                submenu 3
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
+    <div className='container inside_nav'>
+    {active === "Firstcard" && <Home />}
+    {active === "secondcard" && <Contact />}
+    {active === "thirdcard" && <Submenu1 />}
+    {active === "fourthcard" && <Submenu2 />}
+
+    </div>
     <h1 className='container'>Customer List</h1>
       <Table className='container'>
       <thead>
@@ -102,7 +113,13 @@ function App() {
       <Pagination.Last />
     </Pagination>
 
+   
+
+    
+
     </div>
+
+
   );
 }
 
